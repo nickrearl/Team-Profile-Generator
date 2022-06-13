@@ -2,13 +2,69 @@ const Engineer= require('../lib/Engineer')
 const Intern = require('../lib/Intern')
 const Manager = require('../lib/Manager')
 
-const generateeployeeCards = employeeArr => {
-    
+const generateManagerCard = function(manager){
+    for (let index = 0; index < manager.length; index++) {
+        const targetEmp = manager[index];
+        return `
+            <section>
+                <div>
+                    <h2>${targetEmp.name}</h2>
+                    <h3>${targetEmp.role}</h3>
+                </div>
+                <div>
+                    <p>ID: ${targetEmp.id}</p>
+                    <p>Email: <a href="mailto:${targetEmp.email}" target="_blank">${targetEmp.email}</a></p>
+                    <p>Office Number: ${targetEmp.officeNumber}</p>
+                </div>
+            </section>
+
+        `
+    }
+}
+
+const generateEngineerCards = function(engineers){
+    for (let index = 0; index < engineers.length; index++) {
+        const targetEmp = engineers[index];
+        return `
+            <section>
+                <div>
+                    <h2>${targetEmp.name}</h2>
+                    <h3>${targetEmp.role}</h3>
+                </div>
+                <div>
+                    <p>ID: ${targetEmp.id}</p>
+                    <p>Email: <a href="mailto:${targetEmp.email}" target="_blank">${targetEmp.email}</a></p>
+                    <p>gitHub: <a href="github.com/${targetEmp.gitHub}">${targetEmp.this.gitHub}</a></p>
+                </div>
+            </section>
+
+        `
+    }
+
+}
+
+const generateInternCards = function(interns){
+    for (let index = 0; index < interns.length; index++) {
+        const targetEmp = interns[index];
+        return `
+            <section>
+                <div>
+                    <h2>${targetEmp.name}</h2>
+                    <h3>${targetEmp.role}</h3>
+                </div>
+                <div>
+                    <p>ID: ${targetEmp.id}</p>
+                    <p>Email: <a href="mailto:${targetEmp.email}" target="_blank">${targetEmp.email}</a></p>
+                    <p>School: ${targetEmp.school}</p>
+                </div>
+            </section>
+
+        `
+    }
 }
 
 
-
-const generateHTML = employeeArr => {
+const generateHTML = function(manData, engData, intData) {
     return `
         <!DOCTYPE html>
         <html lang="en">
@@ -19,8 +75,17 @@ const generateHTML = employeeArr => {
             <title>Company Directory</title>
         </head>
         <body>
+            <header>
+                <h1>My Team<h1>
+            </header>
+
+            ${generateManagerCard(manData)}
+            ${generateEngineerCards(engData)}
+            ${generateInternCards(intData)}
     
         </body>
         </html>
     `
 }
+
+module.exports = generateHTML

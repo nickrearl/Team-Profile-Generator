@@ -3,32 +3,12 @@ const inquier = require('inquirer')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 const Manager = require('./lib/Manager')
+const generateHTML = require('./src/templates')
 
+const managerArr = []
+const engineerArr = []
+const internArr = []
 
-
-const employeeQuestions = [
-    {
-        type: 'list',
-        name: 'role',
-        message: "What is this employee's job?",
-        choices: ['Engineer', 'Intern']
-    },
-    {
-        type: 'input',
-        name: 'name',
-        message: "What is this employee's name?"
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: "What is this employee's ID number?"
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: "What is this employee's email?"
-    },
-]
 
 const getManager = () => {
     return inquier.prompt([
@@ -53,6 +33,11 @@ const getManager = () => {
             message: "What is the Manager's office number?"
         },
     ])
+    .then(managerData => {
+        const manager = new Manager(managerData.name, managerData.id, managerData.email, 'Manager', managerData.officeNumber)
+        managerArr.push(manager)
+    })
+    .then(addEmployee)
 }
 
 const addEmployee = () => {
@@ -67,7 +52,9 @@ const addEmployee = () => {
         if (addConfirm.newEmployee) {
             additionalEmployeeType()
         } else {
-            return
+            console.log(managerArr);
+            console.log(engineerArr);
+            console.log(internArr);
         }
     })
 }
@@ -114,6 +101,10 @@ const additionalEngineer = () => {
             message: "What is this engineer's gitHub?",
         }
     ])
+    .then(adtlEngAns => {
+        const engineer = new Engineer(adtlEngAns.name, adtlEngAns.id, adtlEngAns.email, 'Engineer', adtlEngAns.gitHub)
+        engineerArr.push(engineer)
+    })
     .then(addEmployee)
 }
 
@@ -136,18 +127,17 @@ const additionalIntern = () => {
         },
         {
             type: 'input',
-            name: 'gitHub',
-            message: "What scool does this Intern attend?",
+            name: 'school',
+            message: "What school does this Intern attend?",
         }
     ])
+    .then(adtlIntAns => {
+        const intern = new Intern(adtlIntAns.name, adtlIntAns.id, adtlIntAns.email, 'Intern', adtlIntAns.school)
+        internArr.push(intern)
+    })
     .then(addEmployee)
 }
 
 getManager()
-    .then(managerData => {
-        const manager = new Manager(managerData.name, managerData.id, managerData.email, 'manager', managerData.officeNumber)
-        console.log(manager);
-    })
-    .then(addEmployee)
 
 
