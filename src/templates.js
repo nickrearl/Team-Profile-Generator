@@ -5,7 +5,7 @@ const Manager = require('../lib/Manager')
 const generateManagerCard = function(manager){
     for (let index = 0; index < manager.length; index++) {
         const targetEmp = manager[index];
-        return `
+        `
             <section>
                 <div>
                     <h2>${targetEmp.name}</h2>
@@ -25,7 +25,7 @@ const generateManagerCard = function(manager){
 const generateEngineerCards = function(engineers){
     for (let index = 0; index < engineers.length; index++) {
         const targetEmp = engineers[index];
-        return `
+        `
             <section>
                 <div>
                     <h2>${targetEmp.name}</h2>
@@ -34,7 +34,7 @@ const generateEngineerCards = function(engineers){
                 <div>
                     <p>ID: ${targetEmp.id}</p>
                     <p>Email: <a href="mailto:${targetEmp.email}" target="_blank">${targetEmp.email}</a></p>
-                    <p>gitHub: <a href="github.com/${targetEmp.gitHub}">${targetEmp.this.gitHub}</a></p>
+                    <p>gitHub: <a href="github.com/${targetEmp.gitHub}">${targetEmp.gitHub}</a></p>
                 </div>
             </section>
 
@@ -46,7 +46,7 @@ const generateEngineerCards = function(engineers){
 const generateInternCards = function(interns){
     for (let index = 0; index < interns.length; index++) {
         const targetEmp = interns[index];
-        return `
+        `
             <section>
                 <div>
                     <h2>${targetEmp.name}</h2>

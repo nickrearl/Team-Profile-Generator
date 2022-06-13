@@ -1,5 +1,7 @@
 const inquier = require('inquirer')
 
+const fs = require('fs')
+
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 const Manager = require('./lib/Manager')
@@ -52,9 +54,15 @@ const addEmployee = () => {
         if (addConfirm.newEmployee) {
             additionalEmployeeType()
         } else {
-            console.log(managerArr);
-            console.log(engineerArr);
-            console.log(internArr);
+            fs.writeFile('./dist/index.html', generateHTML(managerArr, engineerArr, internArr), err => {
+                if(err) throw err
+
+                console.log(`
+                ==================================================
+                HTML page created check it out in the dist folder!
+                ==================================================
+                `)
+            })
         }
     })
 }
