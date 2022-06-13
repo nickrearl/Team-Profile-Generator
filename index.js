@@ -1,9 +1,10 @@
 const inquier = require('inquirer')
-const Choices = require('inquirer/lib/objects/choices')
 
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 const Manager = require('./lib/Manager')
+
+
 
 const employeeQuestions = [
     {
@@ -51,15 +52,27 @@ const getManager = () => {
             name: 'officeNumber',
             message: "What is the Manager's office number?"
         },
+    ])
+}
+
+const addEmployee = () => {
+    return inquier.prompt([
         {
             type: 'confirm',
             name: 'newEmployee',
             message: 'Would you like to add another employee?'
         },
     ])
+    .then(addConfirm => {
+        if (addConfirm.newEmployee) {
+            additionalEmployeeType()
+        } else {
+            return
+        }
+    })
 }
 
-const additionalEmployee = () => {
+const additionalEmployeeType = () => {
     return inquier.prompt([
         {
             type: 'list',
@@ -68,6 +81,14 @@ const additionalEmployee = () => {
             choices: ['Engineer', 'Intern']
         }
     ])
+    .then(checkEmpType => {
+        if (checkEmpType.role === 'Engineer') {
+            additionalEngineer()
+        }
+        else if (checkEmpType.role === 'Intern') {
+            additionalIntern()
+        }
+    })
 }
 
 const additionalEngineer = () => {
@@ -93,16 +114,40 @@ const additionalEngineer = () => {
             message: "What is this engineer's gitHub?",
         }
     ])
+    .then(addEmployee)
+}
+
+const additionalIntern = () => {
+    return inquier.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is this Intern's name?"
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is this Intern's ID number?"
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is this Intern's email?"
+        },
+        {
+            type: 'input',
+            name: 'gitHub',
+            message: "What scool does this Intern attend?",
+        }
+    ])
+    .then(addEmployee)
 }
 
 getManager()
     .then(managerData => {
         const manager = new Manager(managerData.name, managerData.id, managerData.email, 'manager', managerData.officeNumber)
         console.log(manager);
-        if (managerData.newEmployee) {
-            additionalEmployee()
-        } else {
-            console.log('dog shit code');
-        }
     })
-    
+    .then(addEmployee)
+
+
